@@ -99,12 +99,16 @@ def user_registration(file: str, file_written: bool):
 def read_user_data(file):
     with open(file, "r") as in_data:
         csv_reader = csv.reader(in_data, delimiter="\t")
+        print("\n")
+        print("=" * 50)
+        print("        USERS")
+        print("=" * 50)
 
         for line in csv_reader:
             for data in line:
                 print(data, end=" ")
-
             print()
+        print("=" * 50, "\n")
 
 
 def menu() -> None:
