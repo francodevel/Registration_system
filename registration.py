@@ -96,7 +96,7 @@ def user_registration(file: str, file_written: bool):
                     csv_writer.writerow(line)
 
 
-def read_user_data(file):
+def read_user_data(file: str):
     with open(file, "r") as in_data:
         csv_reader = csv.reader(in_data, delimiter="\t")
         print("\n")
