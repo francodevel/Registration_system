@@ -8,7 +8,8 @@ import time
 file_written = False
 file = "user_data.csv"
 
-def get_first_name():
+
+def get_first_name() -> str:
     while True:
         try:
             first_name = input("First Name: ")
@@ -17,10 +18,11 @@ def get_first_name():
             break
         except ValueError:
             print("Field is empty, please enter your First Name.")
-            
+
     return first_name
 
-def get_last_name():
+
+def get_last_name() -> str:
     while True:
         try:
             last_name = input("Last Name: ")
@@ -30,9 +32,10 @@ def get_last_name():
         except ValueError:
             print("Field is empty, please enter your last name.")
 
-        return last_name
+    return last_name
 
-def get_email():
+
+def get_email() -> str:
     while True:
         try:
             email = input("Email: ")
@@ -44,10 +47,11 @@ def get_email():
 
     return email
 
-def get_password():
+
+def get_password() -> str:
     while True:
         try:
-            password = input("Password: ") 
+            password = input("Password: ")
             if password == "":
                 raise ValueError
             break
@@ -57,7 +61,7 @@ def get_password():
     return password
 
 
-def input_user_data():
+def input_user_data() -> list:
     print("Sign Up!")
     first_name = get_first_name()
     last_name = get_last_name()
@@ -67,33 +71,34 @@ def input_user_data():
 
     return user_data
 
-def user_registration(file, file_written):
+
+def user_registration(file: str, file_written: bool):
     user_data = input_user_data()
     header = ["first_name", "last_name", "email", "password"]
     if file_written == False:
-        with open(file, "w") as file:
-            csv_writer = csv.writer(file, delimiter="\t")
+        with open(file, "w") as out:
+            csv_writer = csv.writer(out, delimiter="\t")
             csv_writer.writerow(header)
             csv_writer.writerow(user_data)
     else:
         data_read = []
-        with open(file, "r") as file: 
-            csv_reader = csv.reader(file, delimiter="\t")
+        with open(file, "r") as in_data:
+            csv_reader = csv.reader(in_data, delimiter="\t")
 
             for line in csv_reader:
                 data_read.append(line)
             data_read.append(user_data)
 
-            with open(file, "w") as file:
-                csv_writer = csv.writer(file, delimiter="\t")
+            with open(file, "w") as out:
+                csv_writer = csv.writer(out, delimiter="\t")
 
                 for line in data_read:
                     csv_writer.writerow(line)
-                
+
 
 def read_user_data(file):
-    with open(file, "r") as file:
-        csv_reader = csv.reader(file, delimiter="\t")
+    with open(file, "r") as in_data:
+        csv_reader = csv.reader(in_data, delimiter="\t")
 
         for line in csv_reader:
             for data in line:
@@ -101,15 +106,19 @@ def read_user_data(file):
 
             print()
 
-def menu():
+
+def menu() -> None:
     print("What do you wish to do by now?")
-    print("""
+    print(
+        """
         1) Register Users
         2) Read Users Data
         3) Quit
-        """)
+        """
+    )
 
-def choice_selection(choice, file, file_written):
+
+def choice_selection(choice: int, file: str, file_written: bool):
     if choice == 1:
         user_registration(file, file_written)
     elif choice == 2:
@@ -118,7 +127,8 @@ def choice_selection(choice, file, file_written):
         print("Bye!")
         sys.exit()
 
-def get_menu_choice(file, filewritten):
+
+def get_menu_choice(file: str, filewritten: bool):
     while True:
         menu()
         try:
@@ -132,10 +142,11 @@ def get_menu_choice(file, filewritten):
 
         choice_selection(choice, file, file_written)
 
+
 if __name__ == "__main__":
     try:
         get_menu_choice(file, file_written)
-    except KeyboardInterrupt:   
+    except KeyboardInterrupt:
         print("See you around!")
         print("Bye!")
         time.sleep(2)
